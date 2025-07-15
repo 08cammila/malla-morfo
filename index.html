@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Malla Curricular TMED Morfofisiopatología y Citodiagnóstico</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff0f6;
+    color: #4a3c6b;
+    margin: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #9b59b6;
+    margin-bottom: 30px;
+  }
+  .malla {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+  }
+  .semestre {
+    background: #f8e6fb;
+    border-radius: 10px;
+    min-width: 200px;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px #d6a6e1aa;
+  }
+  .semestre h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #7f5fa4;
+    font-weight: 700;
+  }
+  .ramo {
+    background: #f4d4f4;
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    color: #57365a;
+  }
+  /* Estados de los ramos */
+  .ramo.bloqueado {
+    background: #e7d4e8;
+    color: #a38baa;
+    cursor: not-allowed;
+  }
+  .ramo.desbloqueado {
+    background: #f4d4f4;
+    color: #57365a;
+    cursor: pointer;
+  }
+  .ramo.aprobado {
+    background: #cfa0d4;
+    color: #3a1e50;
+    border-color: #6e3b89;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<h1>Malla Curricular TMED Morfofisiopatología y Citodiagnóstico</h1>
+
+<div class="malla" id="malla">
+
+  <!-- Semestre 1 -->
+  <div class="semestre" data-semestre="1">
+    <h2>Semestre 1</h2>
+    <div class="ramo desbloqueado" data-nombre="Anatomía General" data-prerequisitos="">Anatomía General</div>
+    <div class="ramo desbloqueado" data-nombre="Fisiología I" data-prerequisitos="">Fisiología I</div>
+    <div class="ramo desbloqueado" data-nombre="Bioquímica" data-prerequisitos="">Bioquímica</div>
+    <div class="ramo desbloqueado" data-nombre="Citología" data-prerequisitos="">Citología</div>
+  </div>
+
+  <!-- Semestre 2 -->
+  <div class="semestre" data-semestre="2">
+    <h2>Semestre 2</h2>
+    <div class="ramo bloqueado" data-nombre="Anatomía Regional" data-prerequisitos="Anatomía General">Anatomía Regional</div>
+    <div class="ramo bloqueado" data-nombre="Fisiología II" data-prerequisitos="Fisiología I">Fisiología II</div>
+    <div class="ramo bloqueado" data-nombre="Histología" data-prerequisitos="Citología">Histología</div>
+    <div class="ramo bloqueado" data-nombre="Microbiología Básica" data-prerequisitos="">Microbiología Básica</div>
+  </div>
+
+  <!-- Semestre 3 -->
+  <div class="semestre" data-semestre="3">
+    <h2>Semestre 3</h2>
+    <div class="ramo bloqueado" data-nombre="Patología General" data-prerequisitos="Histología,Fisiología II">Patología General</div>
+    <div class="ramo bloqueado" data-nombre="Inmunología" data-prerequisitos="Microbiología Básica">Inmunología</div>
+    <div class="ramo bloqueado" data-nombre="Técnicas de Laboratorio I" data-prerequisitos="Citología,Bioquímica">Técnicas de Laboratorio I</div>
+  </div>
+
+  <!-- Semestre 4 -->
+  <div class="semestre" data-semestre="4">
+    <h2>Semestre 4</h2>
+    <div class="ramo bloqueado" data-nombre="Patología Específica" data-prerequisitos="Patología General">Patología Específica</div>
+    <div class="ramo bloqueado" data-nombre="Técnicas de Laboratorio II" data-prerequisitos="Técnicas de Laboratorio I">Técnicas de Laboratorio II</div>
+    <div class="ramo bloqueado" data-nombre="Citodiagnóstico" data-prerequisitos="Citología,Patología General">Citodiagnóstico</div>
+  </div>
+
+  <!-- Semestre 5 -->
+  <div class="semestre" data-semestre="5">
+    <h2>Semestre 5</h2>
+    <div class="ramo bloqueado" data-nombre="Microbiología Avanzada" data-prerequisitos="Microbiología Básica,Inmunología">Microbiología Avanzada</div>
+    <div class="ramo bloqueado" data-nombre="Anatomía Patológica" data-prerequisitos="Patología General,Anatomía Regional">Anatomía Patológica</div>
+    <div class="ramo bloqueado" data-nombre="Farmacología" data-prerequisitos="Fisiología II,Bioquímica">Farmacología</div>
+  </div>
+
+  <!-- Semestre 6 -->
+  <div class="semestre" data-semestre="6">
+    <h2>Semestre 6</h2>
+    <div class="ramo bloqueado" data-nombre="Citopatología" data-prerequisitos="Citodiagnóstico,Anatomía Patológica">Citopatología</div>
+    <div class="ramo bloqueado" data-nombre="Hematología" data-prerequisitos="Técnicas de Laboratorio II,Patología Específica">Hematología</div>
+    <div class="ramo bloqueado" data-nombre="Parasitología" data-prerequisitos="Microbiología Avanzada">Parasitología</div>
+  </div>
+
+</div>
+
+<script>
+  // Función para actualizar el estado de los ramos según prerequisitos aprobados
+  function actualizarEstados() {
+    const ramos = document.querySelectorAll('.ramo');
+    // Crear un set con nombres de ramos aprobados
+    const aprobados = new Set();
+    ramos.forEach(r => {
+      if (r.classList.contains('aprobado')) {
+        aprobados.add(r.dataset.nombre);
+      }
+    });
+    // Revisar cada ramo para desbloquear si todos sus prerequisitos están aprobados
+    ramos.forEach(r => {
+      if (r.classList.contains('aprobado')) return; // ya aprobado, no tocar
+      const prereqs = r.dataset.prerequisitos;
+      if (!prereqs) {
+        // Si no tiene prerequisitos, siempre desbloqueado
+        r.classList.add('desbloqueado');
+        r.classList.remove('bloqueado');
+      } else {
+        // Tiene prerequisitos, verificar si todos están aprobados
+        const listaPrereqs = prereqs.split(',').map(p => p.trim()).filter(p => p.length > 0);
+        const todosAprobados = listaPrereqs.every(p => aprobados.has(p));
+        if (todosAprobados) {
+          r.classList.add('desbloqueado');
+          r.classList.remove('bloqueado');
+        } else {
+          r.classList.add('bloqueado');
+          r.classList.remove('desbloqueado');
+        }
+      }
+    });
+  }
+
+  // Al hacer click en un ramo desbloqueado, cambiar a aprobado
+  document.getElementById('malla').addEventListener('click', e => {
+    const el = e.target;
+    if (!el.classList.contains('ramo')) return;
+    if (el.classList.contains('bloqueado')) return; // no hacer nada si bloqueado
+    if (el.classList.contains('aprobado')) {
+      // Si ya aprobado, deshacer la aprobación (para poder corregir)
+      el.classList.remove('aprobado');
+      actualizarEstados();
+      return;
+    }
+    // Aprobar ramo
+    el.classList.add('aprobado');
+    actualizarEstados();
+  });
+
+  // Inicializar estados al cargar la página
+  actualizarEstados();
+</script>
+
+</body>
+</html>
